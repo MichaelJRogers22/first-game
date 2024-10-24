@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 80
-const JUMP_VELOCITY = -230
+const JUMP_VELOCITY = -225
 var JUMP_COUNT = 0
 var FRUIT_POWER = 1
 var LANDING : bool
