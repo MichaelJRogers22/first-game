@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvlhcemxnmsmv"]
+
+[ext_resource type="FontFile" uid="uid://bfj3sjla5htys" path="res://Assets/fonts/PixelOperator8.ttf" id="1_vatfm"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Score Label" type="Label" parent="."]
+offset_top = 1.0
+offset_right = 139.0
+offset_bottom = 74.0
+scale = Vector2(0.375, 0.375)
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.0784314, 0.596078, 0.862745, 1)
+theme_override_fonts/font = ExtResource("1_vatfm")
+text = "you've collected 0 out of 12 coins"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+justification_flags = 35

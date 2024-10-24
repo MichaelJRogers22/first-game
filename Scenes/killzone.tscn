@@ -1,0 +1,90 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq4c05vkcotrn"]
+
+[ext_resource type="Script" path="res://Scripts/killzone.gd" id="1_ordyu"]
+[ext_resource type="AudioStream" uid="uid://umlisub8j18i" path="res://Assets/sounds/explosion.wav" id="2_vsn8e"]
+[ext_resource type="AudioStream" uid="uid://cuir5btv2u8ko" path="res://Assets/sounds/hurt.wav" id="3_ik0dh"]
+
+[sub_resource type="Animation" id="Animation_8bhjy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("die_audio:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("hurt_audio:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_q14ul"]
+resource_name = "die_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("die_audio:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("hurt_audio:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8pmtw"]
+_data = {
+"RESET": SubResource("Animation_8bhjy"),
+"die_animation": SubResource("Animation_q14ul")
+}
+
+[node name="killzone" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_ordyu")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.875
+one_shot = true
+
+[node name="die_audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_vsn8e")
+bus = &"DieSFX"
+
+[node name="hurt_audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ik0dh")
+bus = &"DieSFX"
+
+[node name="die_animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8pmtw")
+}
+
+[connection signal="area_shape_exited" from="." to="." method="_on_area_shape_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

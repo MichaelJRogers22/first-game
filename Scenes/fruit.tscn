@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://bxkwt00ws7ixl"]
+
+[ext_resource type="Script" path="res://Scripts/fruit.gd" id="1_8ylfp"]
+[ext_resource type="Texture2D" uid="uid://fnl0df2cy13l" path="res://Assets/sprites/fruit.png" id="1_tqhjj"]
+[ext_resource type="AudioStream" uid="uid://byewul14cv28t" path="res://Assets/sounds/power_up.wav" id="3_ucf2n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2koff"]
+radius = 4.0
+
+[sub_resource type="Animation" id="Animation_uqg1e"]
+resource_name = "powerup_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PowerUpSound:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ickx6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PowerUpSound:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t747a"]
+_data = {
+"RESET": SubResource("Animation_ickx6"),
+"powerup_animation": SubResource("Animation_uqg1e")
+}
+
+[node name="Area2D" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_8ylfp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_tqhjj")
+region_enabled = true
+region_rect = Rect2(0, 50, 15, 14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_2koff")
+
+[node name="PowerUpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ucf2n")
+bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_t747a")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
